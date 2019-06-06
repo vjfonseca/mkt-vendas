@@ -1,0 +1,129 @@
+
+
+<mat-card>
+  <mat-tab-group>
+    <mat-tab label="Estratégico">
+      <div *ngIf="loadCamp">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Midia</th>
+              <th scope="col">Funcionarios</th>
+              <th scope="col">Produtos</th>
+              <th scope="col">Inicio</th>
+              <th scope="col">Fim</th>
+              <th scope="col">Variação</th>
+              <th scope="col">Custo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr mdbTableCol *ngFor="let campanha of campanhas">
+              <td>{{campanha.ID}}</td>
+              <td>{{campanha.MIDIA}}</td>
+              <td>
+                <div *ngFor="let funcionario of campanha.funcionarios">
+                  {{ funcionario.Nome }} 
+                  <span *ngIf="funcionario.idN==campanha.gerenteId"> (Gerente) </span>
+                </div>
+              </td>
+              <td>
+              <div *ngFor="let produto of campanha.produtos">
+                  {{ produto.nomeprod }}
+                </div>
+              </td>
+              <td>
+                {{campanha.DATA_TERMINO.getDay()+1}}/{{campanha.DATA_INICIO.getMonth()+1}}/{{campanha.DATA_INICIO.getFullYear()}}
+              </td>
+              <td>
+                {{campanha.DATA_TERMINO.getDay()+1}}/{{campanha.DATA_TERMINO.getMonth()+1}}/{{campanha.DATA_TERMINO.getFullYear()}}
+              </td>
+              <td>{{campanha.variacao}}%</td>
+              <td>R$ {{campanha.custo}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Tático">
+      <div *ngIf="loadMelhoria">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Sim</th>
+              <th scope="col">Não</th>
+              <th scope="col">Pendente</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>{{reclS / recl.length * 100}}% ({{reclS}})</td>
+            <td>{{reclN / recl.length * 100}}% ({{reclN}})</td>
+            <td>{{reclPend / recl.length * 100}}% ({{reclPend}})</td>
+            <td>{{recl.length}}</td>
+          </tbody>
+        </table>
+        <hr>
+        <div>
+          <!--chart-->
+          <div>
+            <div class="chart">
+              <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+                [legend]="pieChartLegend" height="90vh">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Operacional">
+      <div *ngIf="loadCamp">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Midia</th>
+              <th scope="col">Funcionarios</th>
+              <th scope="col">Produtos</th>
+              <th scope="col">Inicio</th>
+              <th scope="col">Fim</th>
+              <th scope="col">Variação</th>
+              <th scope="col">Custo</th>
+              <th scope="col">FINALIZADA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr mdbTableCol *ngFor="let campanha of campanhas">
+              <td>{{campanha.ID}}</td>
+              <td>{{campanha.MIDIA}}</td>
+              <td>
+                <div *ngFor="let funcionario of campanha.funcionarios">
+                  {{ funcionario.Nome }}
+                  <span *ngIf="funcionario.idN==campanha.gerenteId"> (Gerente) </span>
+                </div>
+              </td>
+              <td>
+                <div *ngFor="let produto of campanha.produtos">
+                  {{ produto.nomeprod }}
+                </div>
+              </td>
+              <td>
+                {{campanha.DATA_TERMINO.getDay()+1}}/{{campanha.DATA_INICIO.getMonth()+1}}/{{campanha.DATA_INICIO.getFullYear()}}
+              </td>
+              <td>
+                {{campanha.DATA_TERMINO.getDay()+1}}/{{campanha.DATA_TERMINO.getMonth()+1}}/{{campanha.DATA_TERMINO.getFullYear()}}
+              </td>
+              <td>{{campanha.variacao}}%</td>
+              <td>R$ {{campanha.custo}}</td>
+              <td>{{campanha.FINALIZADA}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</mat-card>
